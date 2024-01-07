@@ -20,13 +20,11 @@
 
 ![Regex](.github/banner/regex-logo.svg)
 
-## Summary
-
 Regex enables to create and handle a validated [regular expression](https://en.wikipedia.org/wiki/Regular_expression).
 
-## Quick start
+## Installing
 
-Install with [Composer](https://packagist.org/packages/chevere/regex).
+Regex is available through [Packagist](https://packagist.org/packages/chevere/regex) and the repository source is at [chevere/regex](https://github.com/chevere/regex).
 
 ```sh
 composer require chevere/regex
