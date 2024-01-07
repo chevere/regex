@@ -20,6 +20,8 @@
 
 ![Regex](.github/banner/regex-logo.svg)
 
+## Summary
+
 Regex enables to create and handle a validated [regular expression](https://en.wikipedia.org/wiki/Regular_expression).
 
 ## Installing
