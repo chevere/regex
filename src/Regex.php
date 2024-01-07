@@ -16,7 +16,7 @@ namespace Chevere\Regex;
 use Chevere\Regex\Exceptions\NoMatchException;
 use Chevere\Regex\Interfaces\RegexInterface;
 use InvalidArgumentException;
-use RuntimeException;
+use LogicException;
 use Safe\Exceptions\PcreException;
 use Throwable;
 use function Chevere\Message\message;
@@ -65,7 +65,7 @@ final class Regex implements RegexInterface
         }
         // @codeCoverageIgnoreStart
         catch (PcreException $e) {
-            throw new RuntimeException(
+            throw new LogicException(
                 (string) message(
                     'Error `%function%` %message%',
                     function: 'preg_match',
@@ -101,7 +101,7 @@ final class Regex implements RegexInterface
         }
         // @codeCoverageIgnoreStart
         catch (PcreException $e) {
-            throw new RuntimeException(
+            throw new LogicException(
                 (string) message(
                     'Error `%function%` %message%',
                     function: 'preg_match_all',
