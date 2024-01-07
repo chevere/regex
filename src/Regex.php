@@ -38,7 +38,9 @@ final class Regex implements RegexInterface
         $this->assertRegex();
         $delimiter = $this->pattern[0];
         $this->noDelimiters = trim($this->pattern, $delimiter);
-        $this->noDelimitersNoAnchors = strval(preg_replace('#^\^(.*)\$$#', '$1', $this->noDelimiters));
+        $this->noDelimitersNoAnchors = strval(
+            preg_replace('#^\^(.*)\$$#', '$1', $this->noDelimiters)
+        );
     }
 
     public function __toString(): string
@@ -56,15 +58,19 @@ final class Regex implements RegexInterface
         return $this->noDelimitersNoAnchors;
     }
 
-    public function match(string $string): array
+    public function match(string $value): array
     {
         try {
-            $match = preg_match($this->pattern, $string, $matches);
+            $match = preg_match($this->pattern, $value, $matches);
         }
         // @codeCoverageIgnoreStart
         catch (PcreException $e) {
             throw new RuntimeException(
-                (string) message('Unable to `%s%`', s: 'preg_match')
+                (string) message(
+                    'Error `%function%` %message%',
+                    function: 'preg_match',
+                    message: $e->getMessage()
+                )
             );
         }
         // @codeCoverageIgnoreEnd
@@ -72,29 +78,35 @@ final class Regex implements RegexInterface
         return $match === 1 ? $matches : [];
     }
 
-    public function assertMatch(string $string): void
+    public function assertMatch(string $value): void
     {
-        if (! $this->match($string)) {
-            throw new NoMatchException(
-                (string) message(
-                    'String `%string%` does not match regex `%pattern%`',
-                    pattern: $this->pattern,
-                    string: $string,
-                ),
-                100
-            );
+        if ($this->match($value)) {
+            return;
         }
+
+        throw new NoMatchException(
+            (string) message(
+                'String `%string%` does not match regex `%pattern%`',
+                pattern: $this->pattern,
+                string: $value,
+            ),
+            100
+        );
     }
 
-    public function matchAll(string $string): array
+    public function matchAll(string $value): array
     {
         try {
-            $match = preg_match_all($this->pattern, $string, $matches);
+            $match = preg_match_all($this->pattern, $value, $matches);
         }
         // @codeCoverageIgnoreStart
         catch (PcreException $e) {
             throw new RuntimeException(
-                (string) message('Unable to `%s%`', s: 'preg_match_all')
+                (string) message(
+                    'Error `%function%` %message%',
+                    function: 'preg_match_all',
+                    message: $e->getMessage()
+                )
             );
         }
         // @codeCoverageIgnoreEnd
@@ -102,18 +114,20 @@ final class Regex implements RegexInterface
         return $match === 1 ? $matches : [];
     }
 
-    public function assertMatchAll(string $string): void
+    public function assertMatchAll(string $value): void
     {
-        if (! $this->matchAll($string)) {
-            throw new NoMatchException(
-                (string) message(
-                    'String `%string%` does not match all regex `%pattern%`',
-                    pattern: $this->pattern,
-                    string: $string,
-                ),
-                110
-            );
+        if ($this->matchAll($value)) {
+            return;
         }
+
+        throw new NoMatchException(
+            (string) message(
+                'String `%string%` does not match all `%pattern%`',
+                pattern: $this->pattern,
+                string: $value,
+            ),
+            110
+        );
     }
 
     private function assertRegex(): void
@@ -124,9 +138,9 @@ final class Regex implements RegexInterface
             throw new InvalidArgumentException(
                 previous: $e,
                 message: (string) message(
-                    'Invalid regex string `%regex%` provided [%preg%]',
+                    'Invalid regex string `%regex%` provided: %error%',
                     regex: $this->pattern,
-                    preg: static::ERRORS[preg_last_error()],
+                    error: static::ERRORS[preg_last_error()],
                 )
             );
         }

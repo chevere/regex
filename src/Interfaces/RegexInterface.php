@@ -43,14 +43,14 @@ interface RegexInterface extends Stringable
     /**
      * @return array<int, string>
      */
-    public function match(string $string): array;
+    public function match(string $value): array;
 
     /**
      * @return array<array<int, string>>
      */
-    public function matchAll(string $string): array;
+    public function matchAll(string $value): array;
 
-    public function assertMatch(string $string): void;
+    public function assertMatch(string $value): void;
 
-    public function assertMatchAll(string $string): void;
+    public function assertMatchAll(string $value): void;
 }
