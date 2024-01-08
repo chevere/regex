@@ -22,7 +22,7 @@
 
 ## Summary
 
-Regex enables to create and handle a validated [regular expression](https://en.wikipedia.org/wiki/Regular_expression).
+Regex enables to work with a validated [regular expression](https://en.wikipedia.org/wiki/Regular_expression).
 
 ## Installing
 

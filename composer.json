@@ -1,6 +1,6 @@
 {
     "name": "chevere/regex",
-    "description": "A chevere regex package",
+    "description": "Validated regular expression",
     "homepage": "https://chevere.org",
     "type": "library",
     "license": "Apache-2.0",
