@@ -37,6 +37,36 @@ final class RegexTest extends TestCase
         $this->assertSame($pattern, $regex->noDelimitersNoAnchors());
     }
 
+    public function delimiterConflictDataProvider(): array
+    {
+        return [
+            ['abc\/', '/'],
+            ['\/abc\/', '/'],
+            ['abc\/i', '/'],
+            ['\/abc\/i', '/'],
+            ['\/ab🐞c\/i', '/'],
+        ];
+    }
+
+    /**
+     * @dataProvider delimiterConflictDataProvider
+     */
+    public function testDelimiterConflict(string $pattern, string $delimiter): void
+    {
+        $patternAnchors = "^{$pattern}$";
+        $patternDelimitersAnchors = "{$delimiter}{$patternAnchors}{$delimiter}";
+        $regex = new Regex($patternDelimitersAnchors);
+        $this->assertSame($patternDelimitersAnchors, $regex->__toString());
+        $this->assertSame($patternAnchors, $regex->noDelimiters());
+        $this->assertSame($pattern, $regex->noDelimitersNoAnchors());
+        $patternNoAnchors = "{$pattern}";
+        $patternDelimitersAnchors = "{$delimiter}{$patternNoAnchors}{$delimiter}";
+        $regex = new Regex($patternDelimitersAnchors);
+        $this->assertSame($patternDelimitersAnchors, $regex->__toString());
+        $this->assertSame($patternNoAnchors, $regex->noDelimiters());
+        $this->assertSame($pattern, $regex->noDelimitersNoAnchors());
+    }
+
     public function testMatch(): void
     {
         $test = 'Hello World!';

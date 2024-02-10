@@ -33,7 +33,10 @@ final class Regex implements RegexInterface
     ) {
         $this->assertPattern();
         $delimiter = $this->pattern[0];
-        $this->noDelimiters = trim($this->pattern, $delimiter);
+        $this->noDelimiters = substr($this->pattern, 1);
+        /** @var int $tailPos */
+        $tailPos = strrpos($this->noDelimiters, $delimiter);
+        $this->noDelimiters = substr($this->noDelimiters, 0, $tailPos);
         $this->noDelimitersNoAnchors = strval(
             preg_replace('#^\^(.*)\$$#', '$1', $this->noDelimiters)
         );
