@@ -18,8 +18,6 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_regex&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_regex)
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/regex/badge)](https://www.codefactor.io/repository/github/chevere/regex)
 
-![Regex](.github/banner/regex-logo.svg)
-
 ## Summary
 
 Regex enables to work with a validated [regular expression](https://en.wikipedia.org/wiki/Regular_expression).
