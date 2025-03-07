@@ -37,7 +37,7 @@ final class RegexTest extends TestCase
         $this->assertSame($pattern, $regex->noDelimitersNoAnchors());
     }
 
-    public function delimiterConflictDataProvider(): array
+    public static function delimiterConflictDataProvider(): array
     {
         return [
             ['abc\/', '/'],

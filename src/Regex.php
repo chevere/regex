@@ -63,6 +63,7 @@ final class Regex implements RegexInterface
         if (is_int($match)) {
             return $match === 1 ? $matches : [];
         }
+
         // @codeCoverageIgnoreStart
         throw new LogicException(
             (string) message(
@@ -96,6 +97,7 @@ final class Regex implements RegexInterface
         if (is_int($match)) {
             return $match === 1 ? $matches : [];
         }
+
         // @codeCoverageIgnoreStart
         throw new LogicException(
             (string) message(
