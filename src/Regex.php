@@ -17,6 +17,7 @@ use Chevere\Regex\Exceptions\NoMatchException;
 use Chevere\Regex\Interfaces\RegexInterface;
 use InvalidArgumentException;
 use LogicException;
+use Throwable;
 use function Chevere\Message\message;
 
 final class Regex implements RegexInterface
@@ -59,7 +60,11 @@ final class Regex implements RegexInterface
 
     public function match(string $value): array
     {
-        $match = @preg_match($this->pattern, $value, $matches);
+        try {
+            $match = @preg_match($this->pattern, $value, $matches);
+        } catch (Throwable) {
+            $match = false;
+        }
         if (is_int($match)) {
             return $match === 1 ? $matches : [];
         }
@@ -93,7 +98,11 @@ final class Regex implements RegexInterface
 
     public function matchAll(string $value): array
     {
-        $match = @preg_match_all($this->pattern, $value, $matches);
+        try {
+            $match = @preg_match_all($this->pattern, $value, $matches);
+        } catch (Throwable) {
+            $match = false;
+        }
         if (is_int($match)) {
             return $match === 1 ? $matches : [];
         }
@@ -127,8 +136,11 @@ final class Regex implements RegexInterface
 
     private function assertPattern(): void
     {
-        if (@preg_match($this->pattern, '') !== false) {
-            return;
+        try {
+            if (@preg_match($this->pattern, '') !== false) {
+                return;
+            }
+        } catch (Throwable) {
         }
 
         throw new InvalidArgumentException(
