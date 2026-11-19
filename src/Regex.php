@@ -18,7 +18,6 @@ use Chevere\Regex\Interfaces\RegexInterface;
 use InvalidArgumentException;
 use LogicException;
 use Throwable;
-use function Chevere\Message\message;
 
 final class Regex implements RegexInterface
 {
@@ -71,10 +70,10 @@ final class Regex implements RegexInterface
 
         // @codeCoverageIgnoreStart
         throw new LogicException(
-            (string) message(
-                'Error `%function%` %error%',
-                function: 'preg_match',
-                error: static::ERRORS[preg_last_error()],
+            sprintf(
+                'Error `%s` %s',
+                'preg_match',
+                static::ERRORS[preg_last_error()],
             )
         );
         // @codeCoverageIgnoreEnd
@@ -87,10 +86,10 @@ final class Regex implements RegexInterface
         }
 
         throw new NoMatchException(
-            (string) message(
-                'String `%string%` does not match regex `%pattern%`',
-                pattern: $this->pattern,
-                string: $value,
+            sprintf(
+                'String `%s` does not match regex `%s`',
+                $value,
+                $this->pattern,
             ),
             100
         );
@@ -109,10 +108,10 @@ final class Regex implements RegexInterface
 
         // @codeCoverageIgnoreStart
         throw new LogicException(
-            (string) message(
-                'Error `%function%` %error%',
-                function: 'preg_match',
-                error: static::ERRORS[preg_last_error()],
+            sprintf(
+                'Error `%s` %s',
+                'preg_match',
+                static::ERRORS[preg_last_error()],
             )
         );
         // @codeCoverageIgnoreEnd
@@ -125,10 +124,10 @@ final class Regex implements RegexInterface
         }
 
         throw new NoMatchException(
-            (string) message(
-                'String `%string%` does not match all `%pattern%`',
-                pattern: $this->pattern,
-                string: $value,
+            sprintf(
+                'String `%s` does not match all `%s`',
+                $value,
+                $this->pattern,
             ),
             110
         );
@@ -144,10 +143,10 @@ final class Regex implements RegexInterface
         }
 
         throw new InvalidArgumentException(
-            (string) message(
-                'Invalid regex pattern `%pattern%` provided: %error%',
-                pattern: $this->pattern,
-                error: static::ERRORS[preg_last_error()],
+            sprintf(
+                'Invalid regex pattern `%s` provided: %s',
+                $this->pattern,
+                static::ERRORS[preg_last_error()],
             )
         );
     }
